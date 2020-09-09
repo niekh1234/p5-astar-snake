@@ -1,11 +1,11 @@
+const gridSize = 20;
 let snake = [];
 let xVel = 0;
 let yVel = 0;
 let foodX;
 let foodY;
-const gridSize = 20;
 
-function setup(){
+function setup() {
     createCanvas(800,800);
     background(0,0,0);
 
@@ -15,7 +15,7 @@ function setup(){
     start();
 }
 
-function draw(){
+function draw() {
     frameRate(8);
     background(0);
 
@@ -28,20 +28,20 @@ function draw(){
     snake[0][1]+=yVel;
 
     // checking if the snake is out of bounds.
-    if(snake[0][0] < 0 || snake[0][0] >= width || snake[0][1] < 0 || snake[0][1] >= height){
+    if (snake[0][0] < 0 || snake[0][0] >= width || snake[0][1] < 0 || snake[0][1] >= height) {
         // background(255,0,0);
         start();
     }
 
     // checking if the snake ate food.
-    if(snake[0][0] == foodX && snake[0][1] == foodY){
+    if (snake[0][0] == foodX && snake[0][1] == foodY) {
         snake.push([snake[0][0], snake[0][1]]);
 
         foodX = getRandomCoord();
         foodY = getRandomCoord();
 
         // make sure the food is not in the snake.
-        while(isInSnake([foodX, foodY])){
+        while (isInSnake([foodX, foodY])) {
             foodX = getRandomCoord();
             foodY = getRandomCoord();           
         }
@@ -53,11 +53,11 @@ function draw(){
     snake[0][1] = nextSquare[1];
 
     // displaying the snake
-    for(let i = snake.length - 1; i >= 0; i--){
+    for (let i = snake.length - 1; i >= 0; i += 1) {
         fill(0,255,0);
         rect(snake[i][0], snake[i][1], width / gridSize, height / gridSize);
 
-        if(i == 0){
+        if (i == 0) {
             continue;
         }
         // moving a body part one step closer to the head
@@ -67,41 +67,41 @@ function draw(){
 }
 
 // get a random coord on the grid.
-function getRandomCoord(){
+function getRandomCoord() {
     return Math.floor(Math.random() * gridSize) * 40;
 }
 
 // function to check if the snake is not going in itself by checking if there are duplicates in the array.
-function checkDuplicate(s){
+function checkDuplicate(s) {
     let seen = [];
     let duplicate = false;
 
-    s.forEach((bodyPart)=>{
-        if(seen[bodyPart]){
+    s.forEach((bodyPart) => {
+        if (seen[bodyPart]) {
             duplicate = true;
         } else {
             seen[bodyPart] = true;
         }
-    })
+    });
 
     return duplicate;
 }
 
 // function to determine if a coord is in the snake.
-function isInSnake(food){
+function isInSnake(food) {
     let foodInSnake = false;
 
-    snake.forEach((bodyPart)=>{
-        if(bodyPart[0] == food[0] && bodyPart[1] == food[1]){
+    snake.forEach((bodyPart) => {
+        if (bodyPart[0] == food[0] && bodyPart[1] == food[1]) {
             foodInSnake = true;
         }
-    })
+    });
 
     return foodInSnake;
 }
 
 // function for resetting board, and variables.
-function start(){
+function start() {
     snake = [];
 
     const startX = 400;
